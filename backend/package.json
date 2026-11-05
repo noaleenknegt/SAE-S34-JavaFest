@@ -1,0 +1,29 @@
+{
+  "name": "backend_javafest",
+  "version": "1.0.0",
+  "description": "Le serveur qui gère les requêtes a la base de données",
+  "team": {
+    "member": [
+      "Lucas FRICHET",
+      "Damien LUGBULL",
+      "Noa LEENKNEGT",
+      "Laura BORNERT",
+      "Kevin PADAYODI"
+    ],
+    "depot_github": "https://github.com/noaleenknegt/SAE-S34-JavaFest"
+  },
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js",
+    "dev": "node --watch --env-file-if-exists=.env server.js"
+  },
+  "dependencies": {
+    "cors": "2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "5.2.1",
+    "mariadb": "^3.5.4",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
