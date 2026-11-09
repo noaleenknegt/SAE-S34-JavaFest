@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
-const routesEvenements = require('./routes/evenements.routes');
+const routesArticles = require('./routes/articles.routes');
 
 const swaggerOptions = swaggerJsdoc({
     definition: {
@@ -30,9 +30,9 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerOptions));
 
 app.use(cors({ origin: 'http://localhost:5173' }));
 
-app.use('/api/event',routesEvenements)
+app.use('/api/articles',routesArticles)
 
 
 app.listen(PORT, () => {
-    console.log(`Api backend de porte d'avenir http://localhost:${PORT}`);
+    console.log(`Api backend de JavaFest http://localhost:${PORT}`);
 });
