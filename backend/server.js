@@ -3,7 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
+
 const routesArticles = require('./routes/articles.routes');
+const routesPass = require('./routes/pass.routes')
 
 const swaggerOptions = swaggerJsdoc({
     definition: {
@@ -31,6 +33,7 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerOptions));
 app.use(cors({ origin: 'http://localhost:5173' }));
 
 app.use('/api/articles',routesArticles)
+app.use('/api/pass', routesPass)
 
 
 app.listen(PORT, () => {
