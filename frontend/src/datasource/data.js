@@ -10,7 +10,7 @@ let festival = {
   edition: 2027,
   description:
     "Java'Fest extends kiff !",
-  startDate: "2027-07-09",
+  startDate: "2027-07-08",
   endDate: "2027-07-11",
   openingHours: { open: "12:00", close: "03:00" },
   address: "Site de la Java, 33128 Miami",
@@ -180,17 +180,17 @@ let performances = [
 // ---------- Billetterie ----------
 // scope : "1-jour" (valable pour un jour précis, choisi à l'achat), "2-jours", "3-jours", "4-jours"
 let ticketTypes = [
-  { _id: "tt-1jour", code: "PASS1J", name: "Pass 1 jour", scope: "1-jour", price: 90, quantityTotal: 3000, quantityLeft: 2985, description: "Accès au festival pour la journée de votre choix." },
-  { _id: "tt-2jours", code: "PASS2J", name: "Pass 2 jours", scope: "2-jours", price: 120 , quantityTotal: 3000, quantityLeft: 297, description: "Accès aux deux jours, du festival" },
-  { _id: "tt-3jours", code: "PASS3J", name: "Pass 3 jours", scope: "3-jours", price: 180, quantityTotal: 2000, quantityLeft: 1050, description: "Accès aux trois jours du festival." },
-  { _id: "tt-4jours", code: "PASS4J", name: "Pass 4 jours", scope: "4-jours", price: 220, quantityTotal: 1000, quantityLeft: 554, description: "Accès aux quatre jours du festival." },
+  { _id: "tt-1jour", code: "PASS1J", name: "Pass 1 jour", scope: "1-jour",day:null , price: 90, quantityTotal: 3000, quantityLeft: 2, description: "Accès au festival pour la journée de votre choix." },
+  { _id: "tt-2jours", code: "PASS2J", name: "Pass 2 jours", scope: "2-jours", day: ["2027-07-9", "2027-07-10"] , price: 120 , quantityTotal: 3000, quantityLeft: 297, description: "Accès aux deux jours, du festival" },
+  { _id: "tt-3jours", code: "PASS3J", name: "Pass 3 jours", scope: "3-jours", day: ["2027-07-9", "2027-07-11"] , price: 180, quantityTotal: 2000, quantityLeft: 1050, description: "Accès aux trois jours du festival." },
+  { _id: "tt-4jours", code: "PASS4J", name: "Pass 4 jours", scope: "4-jours", day: ["2027-07-8", "2027-07-11"] , price: 220, quantityTotal: 1000, quantityLeft: 554, description: "Accès aux quatre jours du festival." },
 ];
 
 // day : date du pass 1 jour, null pour les pass 3 jours et VIP
 // qrCode : contenu encodé dans le QR code (à transformer en image côté front)
 let tickets = [
   { _id: "t-0001", ticketTypeId: "tt-3jours", userId: "u-lucas", holderName: "Lucas Frichet", holderEmail: "lucas.frichet@example.org", day: null, qrCode: "LJF2027-PASS3J-0001-A7F3K9", purchaseDate: "2027-03-14T10:22:00+01:00", used: false },
-  { _id: "t-0002", ticketTypeId: "tt-2jours", userId: "u-damien", holderName: "Damien Lugbull", holderEmail: "damien.lugbull@example.org", day: null, qrCode: "LJF2027-VIP-0002-M2P8Q1", purchaseDate: "2027-03-14T10:22:00+01:00", used: false },
+  { _id: "t-0002", ticketTypeId: "tt-2jours", userId: "u-damien", holderName: "Damien Lugbull", holderEmail: "damien.lugbull@example.org", day: ["2027-07-10", "2027-07-11"], qrCode: "LJF2027-VIP-0002-M2P8Q1", purchaseDate: "2027-03-14T10:22:00+01:00", used: false },
   { _id: "t-0003", ticketTypeId: "tt-1jour", userId: "u-client", holderName: "client1", holderEmail: "client1@example.org", day: "2027-07-10", qrCode: "LJF2027-PASS1J-0003-X5D2L7", purchaseDate: "2027-04-02T18:45:00+02:00", used: false },
   { _id: "t-0004", ticketTypeId: "tt-4joursjour", userId: "u-lucas", holderName: "Chloé Petit", holderEmail: "chloe.petit@example.org", day: "2027-07-09", qrCode: "LJF2027-PASS1J-0004-B9R4T6", purchaseDate: "2027-04-20T09:05:00+02:00", used: false },
   { _id: "t-0005", ticketTypeId: "tt-1jour", userId: "u-damien", holderName: "Chloé Petit", holderEmail: "chloe.petit@example.org", day: "2027-07-11", qrCode: "LJF2027-PASS1J-0005-H1W8Z3", purchaseDate: "2027-04-20T09:05:00+02:00", used: false },
