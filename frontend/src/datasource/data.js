@@ -31,7 +31,7 @@ let users = [
   { _id: "u-client", name: "Client 1", login: "client1", password: "client1", email: "client1@example.org", role: "public", providerId: null },
 
   { _id: "u-saucegod", name: "Saucegod", login: "saucegod", password: "saucegod1234", email: "booking@csaucegod.fr", role: "prestataire", providerId: "p-saucegod" },
-  { _id: "u-enzymna", name: "DJ Enzymna", login: "Enzymna", password: "Enzymna1234", email: "contact@enzymna.fr", role: "prestataire", providerId: "p-enzymna" },
+  { _id: "u-ezymna", name: "DJ Ezymna", login: "Ezymna", password: "Ezymna1234", email: "contact@ezymna.fr", role: "prestataire", providerId: "p-ezymna" },
   { _id: "u-maya", name: "Maya Lune", login: "mayalune", password: "maya1234", email: "maya@mayalune.fr", role: "prestataire", providerId: "p-maya" },
   { _id: "u-brass", name: "Brass Bandits", login: "brassbandits", password: "brass1234", email: "hello@brassbandits.fr", role: "prestataire", providerId: "p-brass" },
   { _id: "u-camionbleu", name: "Le Camion Bleu", login: "camionbleu", password: "bleu1234", email: "commande@camionbleu.fr", role: "prestataire", providerId: "p-camionbleu" },
@@ -88,10 +88,10 @@ let providers = [
     services: ["planning", "livre-or"],
   },
   {
-    _id: "p-enzymna", type: "artiste", name: "DJ Enzymna", genre: "Électro",
+    _id: "p-ezymna", type: "artiste", name: "DJ Ezymna", genre: "Électro",
     description: "Sets électro et house, ambiance garantie jusqu'au bout de la nuit.",
-    image: "img/artistes/dj-nova.jpg", website: "https://example.org/djenzymna",
-    locationId: null, ownerId: "u-enzymna",
+    image: "img/artistes/dj-nova.jpg", website: "https://example.org/djezymna",
+    locationId: null, ownerId: "u-ezymna",
     needs: { stage: true, sound: true, electricity: true, backstage: true },
     services: ["planning", "livre-or"],
   },
@@ -165,12 +165,12 @@ let performances = [
   // Vendredi 9 juillet
   { _id: "perf-1", artistId: "p-maya", locationId: "l-scene-decouverte", start: "2027-07-09T17:00:00+02:00", end: "2027-07-09T18:00:00+02:00" },
   { _id: "perf-2", artistId: "p-saucegod", locationId: "l-scene-principale", start: "2027-07-09T20:00:00+02:00", end: "2027-07-09T21:30:00+02:00" },
-  { _id: "perf-3", artistId: "p-enzymna", locationId: "l-scene-secondaire", start: "2027-07-09T22:30:00+02:00", end: "2027-07-10T00:00:00+02:00" },
+  { _id: "perf-3", artistId: "p-ezymna", locationId: "l-scene-secondaire", start: "2027-07-09T22:30:00+02:00", end: "2027-07-10T00:00:00+02:00" },
 
   // Samedi 10 juillet
   { _id: "perf-4", artistId: "p-brass", locationId: "l-scene-principale", start: "2027-07-10T18:00:00+02:00", end: "2027-07-10T19:15:00+02:00" },
-  { _id: "perf-5", artistId: "p-maya", locationId: "l-scene-secondaire", start: "2027-07-10T20:00:00+02:00", end: "2027-07-10T21:00:00+02:00" },
-  { _id: "perf-6", artistId: "p-enzymna", locationId: "l-scene-principale", start: "2027-07-10T22:00:00+02:00", end: "2027-07-10T23:30:00+02:00" },
+  { _id: "perf-5", artistId: "p-maya", locationId: "l-scene-secondaire", start: "2027-07-10T20:00:00+02:00", end: "2027-₀7-1₀T21:₀₀:₀₀+₀₂:₀₀" },
+  { _id: "perf-6", artistId: "p-ezymna", locationId: "l-scene-principale", start: "2０２７-０７-１０T２２:００:００+０２:００", end: "２０２７-０７-１０T２３:３０:００+０２:００" },
 
   // Dimanche 11 juillet
   { _id: "perf-7", artistId: "p-saucegod", locationId: "l-scene-secondaire", start: "2027-07-11T16:00:00+02:00", end: "2027-07-11T17:00:00+02:00" },
@@ -246,7 +246,7 @@ let merchOrders = [
 let guestbookMessages = [
   { _id: "gb-1", artistId: "p-saucegod", pseudo: "RockFan25", message: "Hâte de vous revoir sur scène, votre dernier concert était incroyable !", date: "2027-05-02T19:12:00+02:00" },
   { _id: "gb-2", artistId: "p-saucegod", pseudo: "Lucas", message: "Jouez Tempête en ouverture s'il vous plaît !", date: "2027-05-04T08:40:00+02:00" },
-  { _id: "gb-3", artistId: "p-enzymna", pseudo: "Bob", message: "Le set de l'an dernier était dingue, vivement vendredi soir.", date: "2027-05-06T23:01:00+02:00" },
+  { _id: "gb-3", artistId: "p-", pseudo: "Bob", message: "Le set de l'an dernier était dingue, vivement vendredi soir.", date: "2027-05-06T23:01:00+02:00" },
   { _id: "gb-4", artistId: "p-maya", pseudo: "Chloé", message: "Votre voix est magnifique, on a hâte de vous écouter en live.", date: "2027-05-08T16:25:00+02:00" },
   { _id: "gb-5", artistId: "p-brass", pseudo: "FunkyFred", message: "Des cuivres, du groove et du soleil : le combo parfait !", date: "2027-05-09T12:00:00+02:00" },
 ];
