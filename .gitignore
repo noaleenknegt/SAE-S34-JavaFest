@@ -84,3 +84,6 @@ backend/__screenshots__/
 
 # Vite
 backend/*.timestamp-*-*.mjs
+
+# Specs
+SPECIFICATIONS_S3.md
