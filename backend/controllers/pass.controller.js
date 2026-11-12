@@ -1,12 +1,9 @@
 const service = require ('../services/pass.service')
 
-function getPass(req, res) {
+function getPass(req, res, next) {
     service.getPass()
         .then((pass) => res.json(pass))
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ error: "Internal Server Error" });
-        })
+        .catch(next);
 }
 
 module.exports = {getPass}

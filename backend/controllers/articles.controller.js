@@ -2,13 +2,10 @@
 const service = require('../services/articles.service');
 
 
-function getArticles(req, res){
+function getArticles(req, res, next){
     service.getArticles()
         .then((articles) => res.json(articles))
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ error: "Internal Server Error" });
-        })
+        .catch(next)
 }
 
 module.exports = {getArticles}
