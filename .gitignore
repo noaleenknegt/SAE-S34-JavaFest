@@ -1,7 +1,6 @@
 .idea/
 .vscode/
 .env
-package-lock.json
 
 # frontend
 # Logs
