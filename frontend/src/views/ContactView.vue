@@ -4,99 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { festival } from '@/datasource/data.js'
 
 // Traductions locales à la page (un seul fichier) : suit automatiquement la langue FR/EN de la NavBar
-const { t } = useI18n({
-  useScope: 'local',
-  messages: {
-    fr: {
-      heroEyebrow: 'ÉDITION 2027 · LA JAVA',
-      heroTitle: 'Une question ?<br /><span>Écris-nous.</span>',
-      heroSub: "Billetterie, boutique, accessibilité ou partenariat : l'équipe Java'Fest te répond dès que possible.",
-      formEyebrow: 'FORMULAIRE DE CONTACT',
-      formTitle: 'Envoie-nous un message',
-      name: 'Nom complet',
-      email: 'Adresse e-mail',
-      subject: 'Sujet',
-      subjectPlaceholder: 'Choisir un sujet…',
-      subjects: {
-        tickets: 'Billetterie & pass',
-        merch: 'Boutique & retrait merch',
-        access: 'Accessibilité & PMR',
-        press: 'Presse & partenariats',
-        other: 'Autre demande'
-      },
-      message: 'Message',
-      messagePlaceholder: 'Dis-nous tout…',
-      consent: "J'accepte que mes informations soient utilisées pour répondre à ma demande.",
-      send: 'Envoyer le message',
-      sending: 'Envoi en cours…',
-      required: 'Tous les champs sont obligatoires.',
-      errors: {
-        name: 'Indique ton nom (2 caractères minimum).',
-        email: 'Indique une adresse e-mail valide.',
-        subject: 'Choisis un sujet.',
-        message: 'Ton message doit faire au moins 10 caractères.',
-        consent: 'Tu dois accepter pour envoyer le message.'
-      },
-      successEyebrow: 'MESSAGE ENVOYÉ',
-      successTitle: 'Merci, on a bien reçu ton message !',
-      successDesc: 'Nous te répondrons par e-mail dans les meilleurs délais.',
-      sendAnother: 'Envoyer un autre message',
-      backHome: '← Accueil',
-      infoEyebrow: 'INFOS PRATIQUES',
-      infoTitle: "Java'Fest en bref",
-      infoPlace: 'LE LIEU',
-      infoDates: 'LES DATES',
-      infoDatesValue: '08 — 11 JUILLET 2027',
-      infoDelay: 'DÉLAI DE RÉPONSE',
-      infoDelayValue: 'Sous 48 h ouvrées',
-      infoCartTip: 'Un problème avec une commande ? Précise ton numéro de commande dans le message.'
-    },
-    en: {
-      heroEyebrow: '2027 EDITION · LA JAVA',
-      heroTitle: 'Got a question?<br /><span>Drop us a line.</span>',
-      heroSub: "Tickets, shop, accessibility or partnerships: the Java'Fest team will get back to you as soon as possible.",
-      formEyebrow: 'CONTACT FORM',
-      formTitle: 'Send us a message',
-      name: 'Full name',
-      email: 'Email address',
-      subject: 'Subject',
-      subjectPlaceholder: 'Choose a subject…',
-      subjects: {
-        tickets: 'Tickets & passes',
-        merch: 'Shop & merch pickup',
-        access: 'Accessibility',
-        press: 'Press & partnerships',
-        other: 'Other request'
-      },
-      message: 'Message',
-      messagePlaceholder: 'Tell us everything…',
-      consent: 'I agree that my information may be used to answer my request.',
-      send: 'Send message',
-      sending: 'Sending…',
-      required: 'All fields are required.',
-      errors: {
-        name: 'Please enter your name (2 characters minimum).',
-        email: 'Please enter a valid email address.',
-        subject: 'Please choose a subject.',
-        message: 'Your message must be at least 10 characters long.',
-        consent: 'You must accept to send the message.'
-      },
-      successEyebrow: 'MESSAGE SENT',
-      successTitle: 'Thanks, we got your message!',
-      successDesc: "We'll reply by email as soon as possible.",
-      sendAnother: 'Send another message',
-      backHome: '← Home',
-      infoEyebrow: 'GOOD TO KNOW',
-      infoTitle: "Java'Fest at a glance",
-      infoPlace: 'LOCATION',
-      infoDates: 'DATES',
-      infoDatesValue: 'JULY 08 — 11, 2027',
-      infoDelay: 'REPLY TIME',
-      infoDelayValue: 'Within 48 business hours',
-      infoCartTip: 'Issue with an order? Please include your order number in the message.'
-    }
-  }
-})
+const { t } = useI18n()
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const MAX_MESSAGE = 1000
@@ -110,11 +18,11 @@ const sent = ref(false)
 
 const errors = computed(() => {
   const e = {}
-  if (form.name.trim().length < 2) e.name = t('errors.name')
-  if (!EMAIL_RE.test(form.email.trim())) e.email = t('errors.email')
-  if (!form.subject) e.subject = t('errors.subject')
-  if (form.message.trim().length < 10) e.message = t('errors.message')
-  if (!form.consent) e.consent = t('errors.consent')
+  if (form.name.trim().length < 2) e.name = t('contact.errors.name')
+  if (!EMAIL_RE.test(form.email.trim())) e.email = t('contact.errors.email')
+  if (!form.subject) e.subject = t('contact.errors.subject')
+  if (form.message.trim().length < 10) e.message = t('contact.errors.message')
+  if (!form.consent) e.consent = t('contact.errors.consent')
   return e
 })
 
@@ -154,9 +62,9 @@ function reset() {
       <div class="cf-hero-orbit cf-orbit-one"></div>
       <div class="cf-hero-orbit cf-orbit-two"></div>
       <div class="cf-hero-content">
-        <p class="cf-eyebrow"><span class="live-dot"></span> {{ t('heroEyebrow') }}</p>
-        <h1 v-html="t('heroTitle')"></h1>
-        <p class="cf-hero-sub">{{ t('heroSub') }}</p>
+        <p class="cf-eyebrow"><span class="live-dot"></span> {{ t('contact.heroEyebrow') }}</p>
+        <h1 v-html="t('contact.heroTitle')"></h1>
+        <p class="cf-hero-sub">{{ t('contact.heroSub') }}</p>
       </div>
       <span class="cf-hero-spark" aria-hidden="true">✳</span>
     </section>
@@ -165,14 +73,14 @@ function reset() {
       <!-- Formulaire -->
       <section class="cf-card cf-form-card">
         <template v-if="!sent">
-          <p class="cf-card-eyebrow">{{ t('formEyebrow') }}</p>
-          <h2 class="cf-card-title">{{ t('formTitle') }}</h2>
-          <p class="cf-hint">{{ t('required') }}</p>
+          <p class="cf-card-eyebrow">{{ t('contact.formEyebrow') }}</p>
+          <h2 class="cf-card-title">{{ t('contact.formTitle') }}</h2>
+          <p class="cf-hint">{{ t('contact.required') }}</p>
 
           <form novalidate @submit.prevent="onSubmit">
             <div class="cf-row">
               <div class="cf-field">
-                <label for="cf-name">{{ t('name') }}</label>
+                <label for="cf-name">{{ t('contact.name') }}</label>
                 <input
                   id="cf-name"
                   v-model="form.name"
@@ -187,13 +95,13 @@ function reset() {
               </div>
 
               <div class="cf-field">
-                <label for="cf-email">{{ t('email') }}</label>
+                <label for="cf-email">{{ t('contact.email') }}</label>
                 <input
                   id="cf-email"
                   v-model="form.email"
                   type="email"
                   autocomplete="email"
-                  placeholder="prenom.nom@exemple.fr"
+                  :placeholder="t('contact.mailPlaceHolder')"
                   :class="{ 'cf-invalid': showError('email') }"
                   :aria-invalid="!!showError('email')"
                   aria-describedby="cf-email-err"
@@ -204,7 +112,7 @@ function reset() {
             </div>
 
             <div class="cf-field">
-              <label for="cf-subject">{{ t('subject') }}</label>
+              <label for="cf-subject">{{ t('contact.subject') }}</label>
               <div class="cf-select-shell">
                 <select
                   id="cf-subject"
@@ -214,7 +122,7 @@ function reset() {
                   aria-describedby="cf-subject-err"
                   @blur="touched.subject = true"
                 >
-                  <option value="" disabled>{{ t('subjectPlaceholder') }}</option>
+                  <option value="" disabled>{{ t('contact.subjectPlaceholder') }}</option>
                   <option v-for="key in subjectKeys" :key="key" :value="key">{{ t(`subjects.${key}`) }}</option>
                 </select>
                 <span class="cf-select-chevron" aria-hidden="true">▼</span>
@@ -223,13 +131,13 @@ function reset() {
             </div>
 
             <div class="cf-field">
-              <label for="cf-message">{{ t('message') }}</label>
+              <label for="cf-message">{{ t('contact.message') }}</label>
               <textarea
                 id="cf-message"
                 v-model="form.message"
                 rows="6"
                 :maxlength="MAX_MESSAGE"
-                :placeholder="t('messagePlaceholder')"
+                :placeholder="t('contact.messagePlaceholder')"
                 :class="{ 'cf-invalid': showError('message') }"
                 :aria-invalid="!!showError('message')"
                 aria-describedby="cf-message-err"
@@ -251,13 +159,13 @@ function reset() {
                   aria-describedby="cf-consent-err"
                   @blur="touched.consent = true"
                 />
-                <span>{{ t('consent') }}</span>
+                <span>{{ t('contact.consent') }}</span>
               </label>
               <p v-if="showError('consent')" id="cf-consent-err" class="cf-error" role="alert">{{ errors.consent }}</p>
             </div>
 
             <button type="submit" class="cf-btn-primary" :disabled="sending">
-              {{ sending ? t('sending') : t('send') }} <span v-if="!sending">↗</span>
+              {{ sending ? t('contact.sending') : t('contact.send') }} <span v-if="!sending">↗</span>
             </button>
           </form>
         </template>
@@ -265,37 +173,37 @@ function reset() {
         <!-- Confirmation -->
         <div v-else class="cf-success" role="status">
           <span class="cf-success-icon" aria-hidden="true">✳</span>
-          <p class="cf-card-eyebrow">{{ t('successEyebrow') }}</p>
-          <h2 class="cf-card-title">{{ t('successTitle') }}</h2>
-          <p class="cf-success-desc">{{ t('successDesc') }}</p>
+          <p class="cf-card-eyebrow">{{ t('contact.successEyebrow') }}</p>
+          <h2 class="cf-card-title">{{ t('contact.successTitle') }}</h2>
+          <p class="cf-success-desc">{{ t('contact.successDesc') }}</p>
           <div class="cf-success-actions">
-            <button type="button" class="cf-btn-secondary" @click="reset">{{ t('sendAnother') }}</button>
-            <RouterLink to="/" class="cf-btn-home">{{ t('backHome') }}</RouterLink>
+            <button type="button" class="cf-btn-secondary" @click="reset">{{ t('contact.sendAnother') }}</button>
+            <RouterLink to="/" class="cf-btn-home">{{ t('contact.backHome') }}</RouterLink>
           </div>
         </div>
       </section>
 
       <!-- Infos pratiques -->
       <aside class="cf-card cf-info-card">
-        <p class="cf-card-eyebrow">{{ t('infoEyebrow') }}</p>
-        <h2 class="cf-card-title">{{ t('infoTitle') }}</h2>
+        <p class="cf-card-eyebrow">{{ t('contact.infoEyebrow') }}</p>
+        <h2 class="cf-card-title">{{ t('contact.infoTitle') }}</h2>
 
         <ul class="cf-info-list">
           <li>
             <span class="cf-info-icon" aria-hidden="true">✳</span>
-            <div><small>{{ t('infoDates') }}</small><strong>{{ t('infoDatesValue') }}</strong></div>
+            <div><small>{{ t('contact.infoDates') }}</small><strong>{{ t('contact.infoDatesValue') }}</strong></div>
           </li>
           <li>
             <span class="cf-info-icon" aria-hidden="true">⌖</span>
-            <div><small>{{ t('infoPlace') }}</small><strong>{{ festival.address }}</strong></div>
+            <div><small>{{ t('contact.infoPlace') }}</small><strong>{{ festival.address }}</strong></div>
           </li>
           <li>
             <span class="cf-info-icon" aria-hidden="true">♫</span>
-            <div><small>{{ t('infoDelay') }}</small><strong>{{ t('infoDelayValue') }}</strong></div>
+            <div><small>{{ t('contact.infoDelay') }}</small><strong>{{ t('contact.infoDelayValue') }}</strong></div>
           </li>
         </ul>
 
-        <p class="cf-tip">{{ t('infoCartTip') }}</p>
+        <p class="cf-tip">{{ t('contact.infoCartTip') }}</p>
       </aside>
     </div>
   </main>
