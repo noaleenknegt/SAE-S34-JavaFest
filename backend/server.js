@@ -3,8 +3,8 @@ const cors = require('cors');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 
-const routesArticles = require('./routes/articles.routes');
-const routesPass = require('./routes/pass.routes')
+const routesBoutique = require('./routes/boutique.routes');
+const routesBilletterie = require('./routes/billetterie.routes')
 
 const swaggerOptions = swaggerJsdoc({
     definition: {
@@ -31,8 +31,8 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerOptions));
 
 app.use(cors({ origin: 'http://localhost:5173' }));
 
-app.use('/api/articles',routesArticles)
-app.use('/api/pass', routesPass)
+app.use('/api/boutique',routesBoutique);
+app.use('/api/billetterie', routesBilletterie);
 
 
 app.listen(PORT, () => {

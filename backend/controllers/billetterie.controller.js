@@ -1,5 +1,6 @@
-const service = require ('../services/pass.service')
+const service = require ('../services/billetterie.service')
 
+// GET /api/billetterie
 function getPass(req, res, next) {
     service.getPass()
         .then((pass) => res.json(pass))
