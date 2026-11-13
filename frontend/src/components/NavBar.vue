@@ -22,6 +22,7 @@ function setLang(lang) {
       <nav class="main-nav" :aria-label="t('nav.mainNavAria')">
         <RouterLink to="/billets">{{ t('nav.tickets') }}</RouterLink>
         <RouterLink to="/merch">{{ t('nav.merch') }}</RouterLink>
+        <RouterLink to="/contact">{{ t('nav.contact') }}</RouterLink>
       </nav>
 
       <div class="topline-actions">
