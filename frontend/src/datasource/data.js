@@ -3,13 +3,29 @@
 //  SAÉ S3 — Groupe 6
 // ============================================================
 
+// Helper pour champs multilingues { fr, en } compatibles affichage et API
+function tr(fr, en) {
+  const obj = { fr, en }
+  Object.defineProperty(obj, 'toString', {
+    value: function () {
+      const cur = (typeof document !== 'undefined' && document.documentElement?.lang) || 'fr'
+      return this[cur] || this.fr || this.en || ''
+    },
+    enumerable: false,
+    configurable: true,
+  })
+  return obj
+}
+
 // ---------- Festival ----------
 let festival = {
   _id: "festival-2027",
   name: "La Java Festival",
   edition: 2027,
-  description:
+  description: tr(
     "Java'Fest extends kiff !",
+    "Java'Fest extends pure joy!"
+  ),
   startDate: "2027-07-08",
   endDate: "2027-07-11",
   openingHours: { open: "12:00", close: "03:00" },
@@ -36,7 +52,7 @@ let users = [
   { _id: "u-brass", name: "Brass Bandits", login: "brassbandits", password: "brass1234", email: "hello@brassbandits.fr", role: "prestataire", providerId: "p-brass" },
   { _id: "u-camionbleu", name: "Le Camion Bleu", login: "camionbleu", password: "bleu1234", email: "commande@camionbleu.fr", role: "prestataire", providerId: "p-camionbleu" },
   { _id: "u-crepes", name: "Crêpes & Co", login: "crepesco", password: "crepes1234", email: "contact@crepesco.fr", role: "prestataire", providerId: "p-crepes" },
-  { _id: "u-merch", name: "Java Merch Officiel", login: "javamerch", password: "merch1234", email: "boutique@lajavafestival.fr", role: "prestataire", providerId: "p-merch" },
+  { _id: "u-merch", name: tr("Java Merch Officiel", "Official Java Merch"), login: "javamerch", password: "merch1234", email: "boutique@lajavafestival.fr", role: "prestataire", providerId: "p-merch" },
   { _id: "u-atelier", name: "Atelier Bois & Fil", login: "atelier", password: "atelier1234", email: "atelier@boisetfil.fr", role: "prestataire", providerId: "p-atelier" },
   { _id: "u-radio", name: "Radio Miami FM", login: "radioMiami", password: "radio1234", email: "partenariats@radiomiami.fr", role: "prestataire", providerId: "p-radio" },
 ];
@@ -47,30 +63,30 @@ let users = [
 // providerId : prestataire actuellement affecté (null si emplacement libre ou technique)
 let locations = [
   // Scènes
-  { _id: "l-scene-principale", name: "Scène principale", type: "scene", x: 380, y: 40, width: 240, height: 110, areaM2: 400, water: false, electricity: true, providerId: null, capacity: 5000 },
-  { _id: "l-scene-secondaire", name: "Scène secondaire", type: "scene", x: 60, y: 180, width: 170, height: 90, areaM2: 220, water: false, electricity: true, providerId: null, capacity: 1500 },
-  { _id: "l-scene-decouverte", name: "Scène découverte", type: "scene", x: 770, y: 180, width: 150, height: 80, areaM2: 120, water: false, electricity: true, providerId: null, capacity: 600 },
+  { _id: "l-scene-principale", name: tr("Scène principale", "Main Stage"), type: "scene", x: 380, y: 40, width: 240, height: 110, areaM2: 400, water: false, electricity: true, providerId: null, capacity: 5000 },
+  { _id: "l-scene-secondaire", name: tr("Scène secondaire", "Secondary Stage"), type: "scene", x: 60, y: 180, width: 170, height: 90, areaM2: 220, water: false, electricity: true, providerId: null, capacity: 1500 },
+  { _id: "l-scene-decouverte", name: tr("Scène découverte", "Discovery Stage"), type: "scene", x: 770, y: 180, width: 150, height: 80, areaM2: 120, water: false, electricity: true, providerId: null, capacity: 600 },
 
   // Zone de restauration
-  { _id: "l-resto-1", name: "Stand restauration 1", type: "restauration", x: 300, y: 330, width: 70, height: 50, areaM2: 20, water: true, electricity: true, providerId: "p-camionbleu" },
-  { _id: "l-resto-2", name: "Stand restauration 2", type: "restauration", x: 390, y: 330, width: 70, height: 50, areaM2: 15, water: true, electricity: true, providerId: "p-crepes" },
-  { _id: "l-resto-3", name: "Stand restauration 3", type: "restauration", x: 480, y: 330, width: 70, height: 50, areaM2: 15, water: true, electricity: true, providerId: null },
+  { _id: "l-resto-1", name: tr("Stand restauration 1", "Food Stand 1"), type: "restauration", x: 300, y: 330, width: 70, height: 50, areaM2: 20, water: true, electricity: true, providerId: "p-camionbleu" },
+  { _id: "l-resto-2", name: tr("Stand restauration 2", "Food Stand 2"), type: "restauration", x: 390, y: 330, width: 70, height: 50, areaM2: 15, water: true, electricity: true, providerId: "p-crepes" },
+  { _id: "l-resto-3", name: tr("Stand restauration 3", "Food Stand 3"), type: "restauration", x: 480, y: 330, width: 70, height: 50, areaM2: 15, water: true, electricity: true, providerId: null },
 
   // Zone marchande
-  { _id: "l-merch-1", name: "Stand merch 1", type: "marchand", x: 640, y: 330, width: 60, height: 45, areaM2: 9, water: false, electricity: true, providerId: "p-merch" },
-  { _id: "l-merch-2", name: "Stand artisanat", type: "marchand", x: 710, y: 330, width: 60, height: 45, areaM2: 9, water: false, electricity: true, providerId: "p-atelier" },
+  { _id: "l-merch-1", name: tr("Stand merch 1", "Merch Stand 1"), type: "marchand", x: 640, y: 330, width: 60, height: 45, areaM2: 9, water: false, electricity: true, providerId: "p-merch" },
+  { _id: "l-merch-2", name: tr("Stand artisanat", "Handicraft Stand"), type: "marchand", x: 710, y: 330, width: 60, height: 45, areaM2: 9, water: false, electricity: true, providerId: "p-atelier" },
 
   // Partenaires
-  { _id: "l-partenaire-1", name: "Stand partenaire 1", type: "partenaire", x: 640, y: 400, width: 80, height: 50, areaM2: 16, water: false, electricity: true, providerId: "p-radio" },
+  { _id: "l-partenaire-1", name: tr("Stand partenaire 1", "Partner Stand 1"), type: "partenaire", x: 640, y: 400, width: 80, height: 50, areaM2: 16, water: false, electricity: true, providerId: "p-radio" },
 
   // Bars
-  { _id: "l-bar-1", name: "Buvette centrale", type: "bar", x: 460, y: 220, width: 90, height: 45, areaM2: 25, water: true, electricity: true, providerId: null },
-  { _id: "l-bar-2", name: "Bar de la scène secondaire", type: "bar", x: 110, y: 290, width: 70, height: 40, areaM2: 15, water: true, electricity: true, providerId: null },
+  { _id: "l-bar-1", name: tr("Buvette centrale", "Central Bar"), type: "bar", x: 460, y: 220, width: 90, height: 45, areaM2: 25, water: true, electricity: true, providerId: null },
+  { _id: "l-bar-2", name: tr("Bar de la scène secondaire", "Secondary Stage Bar"), type: "bar", x: 110, y: 290, width: 70, height: 40, areaM2: 15, water: true, electricity: true, providerId: null },
 
   // Zones techniques et logistiques
-  { _id: "l-entree", name: "Entrée principale", type: "technique", x: 440, y: 540, width: 120, height: 40, areaM2: 60, water: false, electricity: true, providerId: null },
-  { _id: "l-sanitaires", name: "Sanitaires", type: "technique", x: 880, y: 330, width: 70, height: 60, areaM2: 30, water: true, electricity: true, providerId: null },
-  { _id: "l-info", name: "Stand info / point de rencontre", type: "technique", x: 420, y: 470, width: 80, height: 40, areaM2: 12, water: false, electricity: true, providerId: null },
+  { _id: "l-entree", name: tr("Entrée principale", "Main Entrance"), type: "technique", x: 440, y: 540, width: 120, height: 40, areaM2: 60, water: false, electricity: true, providerId: null },
+  { _id: "l-sanitaires", name: tr("Sanitaires", "Restrooms"), type: "technique", x: 880, y: 330, width: 70, height: 60, areaM2: 30, water: true, electricity: true, providerId: null },
+  { _id: "l-info", name: tr("Stand info / point de rencontre", "Info Desk / Meeting Point"), type: "technique", x: 420, y: 470, width: 80, height: 40, areaM2: 12, water: false, electricity: true, providerId: null },
 ];
 
 // ---------- Prestataires ----------
@@ -80,32 +96,48 @@ let locations = [
 let providers = [
   // Artistes / groupes
   {
-    _id: "p-saucegod", type: "artiste", name: "Saucegod", genre: "Rap",
-    description: "le nain le plus grand de France",
+    _id: "p-saucegod", type: "artiste", name: "Saucegod",
+    genre: tr("Rap", "Rap"),
+    description: tr(
+      "Le nain le plus grand de France, flow tranchant et énergie brute.",
+      "The greatest little giant of France, razor-sharp flow and raw energy."
+    ),
     image: "img/artistes/saucegod.jpg", website: "https://example.org/saucegod",
     locationId: null, ownerId: "u-saucegod",
     needs: { stage: true, sound: true, electricity: true, backstage: true },
     services: ["planning", "livre-or"],
   },
   {
-    _id: "p-ezymna", type: "artiste", name: "DJ Ezymna", genre: "Électro",
-    description: "Sets électro et house, ambiance garantie jusqu'au bout de la nuit.",
+    _id: "p-ezymna", type: "artiste", name: "DJ Ezymna",
+    genre: tr("Électro", "Electro"),
+    description: tr(
+      "Sets électro et house, ambiance garantie jusqu'au bout de la nuit.",
+      "Electro and house sets, guaranteed hype until the early morning."
+    ),
     image: "img/artistes/dj-nova.jpg", website: "https://example.org/djezymna",
     locationId: null, ownerId: "u-ezymna",
     needs: { stage: true, sound: true, electricity: true, backstage: true },
     services: ["planning", "livre-or"],
   },
   {
-    _id: "p-maya", type: "artiste", name: "Maya Lune", genre: "Folk / Pop",
-    description: "Voix douce et guitare acoustique, des textes poétiques en français.",
+    _id: "p-maya", type: "artiste", name: "Maya Lune",
+    genre: tr("Folk / Pop", "Folk / Pop"),
+    description: tr(
+      "Voix douce et guitare acoustique, des textes poétiques en français.",
+      "Soft vocals and acoustic guitar, weaving poetic lyrics in French."
+    ),
     image: "img/artistes/maya-lune.jpg", website: "https://example.org/mayalune",
     locationId: null, ownerId: "u-maya",
     needs: { stage: true, sound: true, electricity: true, backstage: true },
     services: ["planning", "livre-or"],
   },
   {
-    _id: "p-brass", type: "artiste", name: "Brass Bandits", genre: "Funk",
-    description: "Fanfare funk de huit musiciens, cuivres et groove.",
+    _id: "p-brass", type: "artiste", name: "Brass Bandits",
+    genre: tr("Funk", "Funk"),
+    description: tr(
+      "Fanfare funk de huit musiciens, cuivres et groove.",
+      "Eight-piece funk brass band packed with brass power and irresistible groove."
+    ),
     image: "img/artistes/brass-bandits.jpg", website: "https://example.org/brassbandits",
     locationId: null, ownerId: "u-brass",
     needs: { stage: true, sound: true, electricity: true, backstage: true },
@@ -114,16 +146,24 @@ let providers = [
 
   // Restauration
   {
-    _id: "p-camionbleu", type: "restauration", name: "Le Camion Bleu", genre: "Burgers et frites",
-    description: "Food truck de burgers maison, viande locale et option végétarienne.",
+    _id: "p-camionbleu", type: "restauration", name: "Le Camion Bleu",
+    genre: tr("Burgers et frites", "Burgers & Fries"),
+    description: tr(
+      "Food truck de burgers maison, viande locale et option végétarienne.",
+      "Homemade burger food truck, local beef and vegetarian options."
+    ),
     image: "img/stands/camion-bleu.jpg", website: "https://example.org/camionbleu",
     locationId: "l-resto-1", ownerId: "u-camionbleu",
     needs: { water: true, electricity: true, minAreaM2: 20, gabarit: "camion", wasteNearby: true },
     services: ["reservation-repas", "comptage", "contact"],
   },
   {
-    _id: "p-crepes", type: "restauration", name: "Crêpes & Co", genre: "Crêperie sucrée / salée",
-    description: "Crêpes et galettes préparées à la minute.",
+    _id: "p-crepes", type: "restauration", name: "Crêpes & Co",
+    genre: tr("Crêperie sucrée / salée", "Sweet & Savory Crepes"),
+    description: tr(
+      "Crêpes et galettes préparées à la minute.",
+      "Fresh sweet crepes and buckwheat galettes made to order."
+    ),
     image: "img/stands/crepes-co.jpg", website: "https://example.org/crepesco",
     locationId: "l-resto-2", ownerId: "u-crepes",
     needs: { water: true, electricity: true, minAreaM2: 15, gabarit: "stand fixe", wasteNearby: true },
@@ -132,16 +172,25 @@ let providers = [
 
   // Marchands
   {
-    _id: "p-merch", type: "marchand", name: "Java Merch Officiel", genre: "Produits dérivés",
-    description: "T-shirts, affiches et goodies officiels du festival.",
+    _id: "p-merch", type: "marchand",
+    name: tr("Java Merch Officiel", "Official Java Merch"),
+    genre: tr("Produits dérivés", "Merchandise"),
+    description: tr(
+      "T-shirts, affiches et goodies officiels du festival.",
+      "Official festival t-shirts, limited posters and accessories."
+    ),
     image: "img/stands/java-merch.jpg", website: "https://example.org/javamerch",
     locationId: "l-merch-1", ownerId: "u-merch",
     needs: { tables: true, electricity: true, minAreaM2: 9, nearStages: true },
     services: ["boutique", "comptage", "contact"],
   },
   {
-    _id: "p-atelier", type: "marchand", name: "Atelier Bois & Fil", genre: "Artisanat",
-    description: "Bijoux en bois, tote bags brodés et objets faits main.",
+    _id: "p-atelier", type: "marchand", name: "Atelier Bois & Fil",
+    genre: tr("Artisanat", "Handmade Crafts"),
+    description: tr(
+      "Bijoux en bois, tote bags brodés et objets faits main.",
+      "Handcrafted wooden jewelry, embroidered tote bags, and unique art."
+    ),
     image: "img/stands/atelier-bois-fil.jpg", website: "https://example.org/boisetfil",
     locationId: "l-merch-2", ownerId: "u-atelier",
     needs: { tables: true, electricity: true, minAreaM2: 9, nearStages: false },
@@ -150,8 +199,12 @@ let providers = [
 
   // Partenaires / sponsors
   {
-    _id: "p-radio", type: "partenaire", name: "Radio Miami FM", genre: "Média partenaire",
-    description: "Radio locale partenaire : jeux, goodies et interviews en direct.",
+    _id: "p-radio", type: "partenaire", name: "Radio Miami FM",
+    genre: tr("Média partenaire", "Media Partner"),
+    description: tr(
+      "Radio locale partenaire : jeux, goodies et interviews en direct.",
+      "Local media partner: live interviews, games, and on-air giveaways."
+    ),
     image: "img/stands/radio-miami.jpg", website: "https://example.org/radiomiami",
     locationId: "l-partenaire-1", ownerId: "u-radio",
     needs: { visible: true, electricity: true, minAreaM2: 16 },
@@ -169,8 +222,8 @@ let performances = [
 
   // Samedi 10 juillet
   { _id: "perf-4", artistId: "p-brass", locationId: "l-scene-principale", start: "2027-07-10T18:00:00+02:00", end: "2027-07-10T19:15:00+02:00" },
-  { _id: "perf-5", artistId: "p-maya", locationId: "l-scene-secondaire", start: "2027-07-10T20:00:00+02:00", end: "2027-₀7-1₀T21:₀₀:₀₀+₀₂:₀₀" },
-  { _id: "perf-6", artistId: "p-ezymna", locationId: "l-scene-principale", start: "2０２７-０７-１０T２２:００:００+０２:００", end: "２０２７-０７-１０T２３:３０:００+０２:００" },
+  { _id: "perf-5", artistId: "p-maya", locationId: "l-scene-secondaire", start: "2027-07-10T20:00:00+02:00", end: "2027-07-10T21:00:00+02:00" },
+  { _id: "perf-6", artistId: "p-ezymna", locationId: "l-scene-principale", start: "2027-07-10T22:00:00+02:00", end: "2027-07-10T23:30:00+02:00" },
 
   // Dimanche 11 juillet
   { _id: "perf-7", artistId: "p-saucegod", locationId: "l-scene-secondaire", start: "2027-07-11T16:00:00+02:00", end: "2027-07-11T17:00:00+02:00" },
@@ -180,10 +233,62 @@ let performances = [
 // ---------- Billetterie ----------
 // scope : "1-jour" (valable pour un jour précis, choisi à l'achat), "2-jours", "3-jours", "4-jours"
 let ticketTypes = [
-  { _id: "tt-1jour", code: "PASS1J", name: "Pass 1 jour", scope: "1-jour",day:null , price: 90, quantityTotal: 3000, quantityLeft: 2, description: "Accès au festival pour la journée de votre choix." },
-  { _id: "tt-2jours", code: "PASS2J", name: "Pass 2 jours", scope: "2-jours", day: ["2027-07-9", "2027-07-10"] , price: 120 , quantityTotal: 3000, quantityLeft: 297, description: "Accès aux deux jours, du festival" },
-  { _id: "tt-3jours", code: "PASS3J", name: "Pass 3 jours", scope: "3-jours", day: ["2027-07-9", "2027-07-11"] , price: 180, quantityTotal: 2000, quantityLeft: 1050, description: "Accès aux trois jours du festival." },
-  { _id: "tt-4jours", code: "PASS4J", name: "Pass 4 jours", scope: "4-jours", day: ["2027-07-8", "2027-07-11"] , price: 220, quantityTotal: 1000, quantityLeft: 554, description: "Accès aux quatre jours du festival." },
+  {
+    _id: "tt-1jour",
+    code: "PASS1J",
+    name: tr("Pass 1 jour", "1-Day Pass"),
+    scope: "1-jour",
+    day: null,
+    price: 90,
+    quantityTotal: 3000,
+    quantityLeft: 2,
+    description: tr(
+      "Accès au festival pour la journée de votre choix.",
+      "Festival access for the single day of your choice."
+    ),
+  },
+  {
+    _id: "tt-2jours",
+    code: "PASS2J",
+    name: tr("Pass 2 jours", "2-Day Pass"),
+    scope: "2-jours",
+    day: ["2027-07-09", "2027-07-10"],
+    price: 120,
+    quantityTotal: 3000,
+    quantityLeft: 297,
+    description: tr(
+      "Accès aux deux jours du festival (vendredi et samedi).",
+      "Access to two festival days (Friday and Saturday)."
+    ),
+  },
+  {
+    _id: "tt-3jours",
+    code: "PASS3J",
+    name: tr("Pass 3 jours", "3-Day Pass"),
+    scope: "3-jours",
+    day: ["2027-07-09", "2027-07-11"],
+    price: 180,
+    quantityTotal: 2000,
+    quantityLeft: 1050,
+    description: tr(
+      "Accès aux trois jours du festival (vendredi à dimanche).",
+      "Access to three festival days (Friday through Sunday)."
+    ),
+  },
+  {
+    _id: "tt-4jours",
+    code: "PASS4J",
+    name: tr("Pass 4 jours", "4-Day Pass"),
+    scope: "4-jours",
+    day: ["2027-07-08", "2027-07-11"],
+    price: 220,
+    quantityTotal: 1000,
+    quantityLeft: 554,
+    description: tr(
+      "Accès intégral aux quatre jours du festival.",
+      "Full access to all four festival days."
+    ),
+  },
 ];
 
 // day : date du pass 1 jour, null pour les pass 3 jours et VIP
@@ -192,7 +297,7 @@ let tickets = [
   { _id: "t-0001", ticketTypeId: "tt-3jours", userId: "u-lucas", holderName: "Lucas Frichet", holderEmail: "lucas.frichet@example.org", day: null, qrCode: "LJF2027-PASS3J-0001-A7F3K9", purchaseDate: "2027-03-14T10:22:00+01:00", used: false },
   { _id: "t-0002", ticketTypeId: "tt-2jours", userId: "u-damien", holderName: "Damien Lugbull", holderEmail: "damien.lugbull@example.org", day: ["2027-07-10", "2027-07-11"], qrCode: "LJF2027-VIP-0002-M2P8Q1", purchaseDate: "2027-03-14T10:22:00+01:00", used: false },
   { _id: "t-0003", ticketTypeId: "tt-1jour", userId: "u-client", holderName: "client1", holderEmail: "client1@example.org", day: "2027-07-10", qrCode: "LJF2027-PASS1J-0003-X5D2L7", purchaseDate: "2027-04-02T18:45:00+02:00", used: false },
-  { _id: "t-0004", ticketTypeId: "tt-4joursjour", userId: "u-lucas", holderName: "Chloé Petit", holderEmail: "chloe.petit@example.org", day: "2027-07-09", qrCode: "LJF2027-PASS1J-0004-B9R4T6", purchaseDate: "2027-04-20T09:05:00+02:00", used: false },
+  { _id: "t-0004", ticketTypeId: "tt-4jours", userId: "u-lucas", holderName: "Chloé Petit", holderEmail: "chloe.petit@example.org", day: "2027-07-09", qrCode: "LJF2027-PASS1J-0004-B9R4T6", purchaseDate: "2027-04-20T09:05:00+02:00", used: false },
   { _id: "t-0005", ticketTypeId: "tt-1jour", userId: "u-damien", holderName: "Chloé Petit", holderEmail: "chloe.petit@example.org", day: "2027-07-11", qrCode: "LJF2027-PASS1J-0005-H1W8Z3", purchaseDate: "2027-04-20T09:05:00+02:00", used: false },
   { _id: "t-0006", ticketTypeId: "tt-3jours", userId: "u-client", holderName: "Bob Durand", holderEmail: "bob.durand@example.org", day: null, qrCode: "LJF2027-PASS3J-0006-C6N2V5", purchaseDate: "2027-05-01T20:10:00+02:00", used: false },
 ];
@@ -200,12 +305,12 @@ let tickets = [
 // ---------- Réservation de repas ----------
 // Plats proposés par les stands de restauration
 let meals = [
-  { _id: "m-burger", providerId: "p-camionbleu", name: "Burger classique", description: "Boeuf local, cheddar, salade, sauce maison, frites.", price: 11, vegetarian: false, allergens: ["gluten", "lait"] },
-  { _id: "m-burger-veggie", providerId: "p-camionbleu", name: "Burger végétarien", description: "Galette de pois chiches, légumes grillés, frites.", price: 10, vegetarian: true, allergens: ["gluten"] },
-  { _id: "m-frites", providerId: "p-camionbleu", name: "Portion de frites", description: "Frites fraîches, sauce au choix.", price: 4, vegetarian: true, allergens: [] },
-  { _id: "m-galette", providerId: "p-crepes", name: "Galette complète", description: "Jambon, fromage, oeuf.", price: 8, vegetarian: false, allergens: ["gluten", "oeuf", "lait"] },
-  { _id: "m-crepe-sucre", providerId: "p-crepes", name: "Crêpe sucre-citron", description: "Crêpe fine, sucre et citron.", price: 4, vegetarian: true, allergens: ["gluten", "oeuf", "lait"] },
-  { _id: "m-crepe-choco", providerId: "p-crepes", name: "Crêpe chocolat-banane", description: "Crêpe, chocolat fondu et banane.", price: 5.5, vegetarian: true, allergens: ["gluten", "oeuf", "lait"] },
+  { _id: "m-burger", providerId: "p-camionbleu", name: tr("Burger classique", "Classic Burger"), description: tr("Boeuf local, cheddar, salade, sauce maison, frites.", "Local beef, cheddar, salad, house sauce, fries."), price: 11, vegetarian: false, allergens: ["gluten", "lait"] },
+  { _id: "m-burger-veggie", providerId: "p-camionbleu", name: tr("Burger végétarien", "Veggie Burger"), description: tr("Galette de pois chiches, légumes grillés, frites.", "Chickpea patty, grilled vegetables, fries."), price: 10, vegetarian: true, allergens: ["gluten"] },
+  { _id: "m-frites", providerId: "p-camionbleu", name: tr("Portion de frites", "French Fries"), description: tr("Frites fraîches, sauce au choix.", "Fresh fries, choice of sauce."), price: 4, vegetarian: true, allergens: [] },
+  { _id: "m-galette", providerId: "p-crepes", name: tr("Galette complète", "Traditional Buckwheat Galette"), description: tr("Jambon, fromage, oeuf.", "Ham, cheese, egg."), price: 8, vegetarian: false, allergens: ["gluten", "oeuf", "lait"] },
+  { _id: "m-crepe-sucre", providerId: "p-crepes", name: tr("Crêpe sucre-citron", "Sugar & Lemon Crepe"), description: tr("Crêpe fine, sucre et citron.", "Thin crepe, sugar and fresh lemon."), price: 4, vegetarian: true, allergens: ["gluten", "oeuf", "lait"] },
+  { _id: "m-crepe-choco", providerId: "p-crepes", name: tr("Crêpe chocolat-banane", "Chocolate & Banana Crepe"), description: tr("Crêpe, chocolat fondu et banane.", "Sweet crepe with melted chocolate and banana slices."), price: 5.5, vegetarian: true, allergens: ["gluten", "oeuf", "lait"] },
 ];
 
 // Créneaux de retrait/repas ; seatsLeft = nombre de couverts restants
@@ -226,12 +331,12 @@ let mealReservations = [
 // ---------- Boutique merch ----------
 // category : "t-shirt" | "affiche" | "goodies"
 let merchItems = [
-  { _id: "mi-tshirt-noir", name: "T-shirt Java Festival noir", category: "t-shirt", description: "T-shirt 100 % coton bio, logo du festival.", price: 25, image: "img/merch/tshirt-noir.jpg", sizes: ["S", "M", "L", "XL"], colors: ["noir"], stock: 120 },
-  { _id: "mi-tshirt-blanc", name: "T-shirt Java Festival blanc", category: "t-shirt", description: "T-shirt 100 % coton bio, impression dos line-up.", price: 25, image: "img/merch/tshirt-blanc.jpg", sizes: ["S", "M", "L", "XL"], colors: ["blanc"], stock: 80 },
-  { _id: "mi-affiche", name: "Affiche officielle 2027", category: "affiche", description: "Affiche A2 sur papier épais, tirage limité.", price: 12, image: "img/merch/affiche-2027.jpg", sizes: [], colors: [], stock: 150 },
-  { _id: "mi-totebag", name: "Tote bag Java", category: "goodies", description: "Sac en toile résistant.", price: 9, image: "img/merch/totebag.jpg", sizes: [], colors: ["écru", "noir"], stock: 200 },
-  { _id: "mi-gourde", name: "Gourde Java 50 cl", category: "goodies", description: "Gourde réutilisable inox, sans plastique.", price: 15, image: "img/merch/gourde.jpg", sizes: [], colors: ["argent"], stock: 60 },
-  { _id: "mi-bouchons", name: "Bouchons d'oreilles festival", category: "goodies", description: "Protections auditives réutilisables avec étui.", price: 6, image: "img/merch/bouchons.jpg", sizes: [], colors: [], stock: 0 },
+  { _id: "mi-tshirt-noir", name: tr("T-shirt Java Festival noir", "Java Festival Black T-shirt"), category: "t-shirt", description: tr("T-shirt 100 % coton bio, logo du festival.", "100% organic cotton t-shirt, official festival logo."), price: 25, image: "img/merch/tshirt-noir.jpg", sizes: ["S", "M", "L", "XL"], colors: ["noir"], stock: 120 },
+  { _id: "mi-tshirt-blanc", name: tr("T-shirt Java Festival blanc", "Java Festival White T-shirt"), category: "t-shirt", description: tr("T-shirt 100 % coton bio, impression dos line-up.", "100% organic cotton t-shirt, lineup print on the back."), price: 25, image: "img/merch/tshirt-blanc.jpg", sizes: ["S", "M", "L", "XL"], colors: ["blanc"], stock: 80 },
+  { _id: "mi-affiche", name: tr("Affiche officielle 2027", "Official 2027 Poster"), category: "affiche", description: tr("Affiche A2 sur papier épais, tirage limité.", "A2 poster on heavyweight paper, limited edition."), price: 12, image: "img/merch/affiche-2027.jpg", sizes: [], colors: [], stock: 150 },
+  { _id: "mi-totebag", name: tr("Tote bag Java", "Java Tote Bag"), category: "goodies", description: tr("Sac en toile résistant.", "Durable canvas tote bag."), price: 9, image: "img/merch/totebag.jpg", sizes: [], colors: ["écru", "noir"], stock: 200 },
+  { _id: "mi-gourde", name: tr("Gourde Java 50 cl", "Java 50 cl Water Bottle"), category: "goodies", description: tr("Gourde réutilisable inox, sans plastique.", "Stainless steel reusable water bottle, plastic-free."), price: 15, image: "img/merch/gourde.jpg", sizes: [], colors: ["argent"], stock: 60 },
+  { _id: "mi-bouchons", name: tr("Bouchons d'oreilles festival", "Festival Earplugs"), category: "goodies", description: tr("Protections auditives réutilisables avec étui.", "Reusable hearing protection with carry case."), price: 6, image: "img/merch/bouchons.jpg", sizes: [], colors: [], stock: 0 },
 ];
 
 // status : "precommandee" | "retiree" | "annulee"  (retrait sur place)
@@ -307,6 +412,7 @@ let surveyResponses = [
 ];
 
 export {
+  tr,
   festival,
   users,
   locations,

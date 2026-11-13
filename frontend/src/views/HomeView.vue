@@ -1,87 +1,72 @@
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { festival, providers } from '@/datasource/data.js'
+import { localize } from '@/i18n'
 
-const liens = [
-  { to: '/billets', label: 'Billetterie' },
-  { to: '/merch', label: 'Boutique' },
-  { to: '/panier', label: 'Mon panier' },
-]
+const { t, locale } = useI18n()
 
 const artistes = computed(() => providers.filter((provider) => provider.type === 'artiste'))
+
+const currentLocaleTag = computed(() => (locale.value === 'fr' ? 'fr-FR' : 'en-US'))
 
 const dateFestival = computed(() => {
   const options = { day: 'numeric', month: 'long' }
   const debut = new Date(`${festival.startDate}T12:00:00`)
   const fin = new Date(`${festival.endDate}T12:00:00`)
-  return `${debut.toLocaleDateString('fr-FR', options)} — ${fin.toLocaleDateString('fr-FR', { ...options, year: 'numeric' })}`
+  return `${debut.toLocaleDateString(currentLocaleTag.value, options)} — ${fin.toLocaleDateString(currentLocaleTag.value, { ...options, year: 'numeric' })}`
 })
 </script>
 
 <template>
   <main class="festival-home">
-    <div class="topline">
-      <RouterLink class="wordmark" to="/" aria-label="JavaFest, accueil">
-        <span class="wordmark-mark">J<span>✳</span></span>
-        <span>JAVA<span class="wordmark-light">'FEST</span></span>
-      </RouterLink>
-
-      <nav class="main-nav" aria-label="Navigation principale">
-        <RouterLink v-for="lien in liens" :key="lien.to" :to="lien.to">
-          {{ lien.label }}
-        </RouterLink>
-      </nav>
-
-      <RouterLink class="login-link" to="/login">Espace festivalier <span>↗</span></RouterLink>
-    </div>
-
     <section class="hero">
       <div class="hero-orbit orbit-one"></div>
       <div class="hero-orbit orbit-two"></div>
       <div class="hero-content">
-        <p class="eyebrow"><span class="live-dot"></span> L'ÉTÉ A SON RENDEZ-VOUS</p>
-        <h1>La musique.<br /><span>Les gens.</span><br />La Java.</h1>
-        <p class="tagline">Java'Fest <em>extends</em> kiff !</p>
-        <p class="intro">Quatre jours pour vibrer, danser et partager. Retrouve-nous pour une nouvelle édition pleine de sons, de rencontres et de bonnes ondes.</p>
+        <p class="eyebrow"><span class="live-dot"></span> {{ t('home.eyebrow') }}</p>
+        <h1>{{ t('home.title1') }}<br /><span>{{ t('home.title2') }}</span><br />{{ t('home.title3') }}</h1>
+        <p class="tagline">Java'Fest <em>extends</em> {{ locale === 'fr' ? 'kiff !' : 'pure joy!' }}</p>
+        <p class="intro">{{ t('home.intro') }}</p>
         <div class="hero-actions">
-          <RouterLink class="button button-light" to="/billets">Je prends ma place <span>↗</span></RouterLink>
-          <a class="text-link" href="#festival">Découvrir le festival <span>↓</span></a>
+          <RouterLink class="button button-light" to="/billets">{{ t('home.ctaTickets') }} <span>↗</span></RouterLink>
+          <a class="text-link" href="#festival">{{ t('home.ctaDiscover') }} <span>↓</span></a>
         </div>
       </div>
 
-      <div class="hero-sticker" aria-label="Édition 2027">
-        <span>ÉDITION</span>
+      <div class="hero-sticker" :aria-label="t('home.stickerAria')">
+        <span>{{ t('home.stickerEdition') }}</span>
         <strong>20<br />27</strong>
-        <span>LET'S GO !</span>
+        <span>{{ t('home.stickerAction') }}</span>
       </div>
       <div class="hero-bottom">
-        <span>LIVE MUSIC · GOOD VIBES · JAVA'FEST</span>
-        <span>08 — 11 JUILLET 2027</span>
+        <span>{{ t('home.bottomMusic') }}</span>
+        <span>{{ t('home.bottomDates') }}</span>
       </div>
     </section>
 
     <section id="festival" class="event-strip">
       <div class="event-item">
         <span class="event-icon">✳</span>
-        <div><small>LES DATES</small><strong>{{ dateFestival }}</strong></div>
+        <div><small>{{ t('home.datesLabel') }}</small><strong>{{ dateFestival }}</strong></div>
       </div>
       <div class="event-item">
         <span class="event-icon">⌖</span>
-        <div><small>LE LIEU</small><strong>{{ festival.address }}</strong></div>
+        <div><small>{{ t('home.locationLabel') }}</small><strong>{{ festival.address }}</strong></div>
       </div>
       <div class="event-item">
         <span class="event-icon">♫</span>
-        <div><small>LES PORTES</small><strong>{{ festival.openingHours.open }} — {{ festival.openingHours.close }}</strong></div>
+        <div><small>{{ t('home.doorsLabel') }}</small><strong>{{ festival.openingHours.open }} — {{ festival.openingHours.close }}</strong></div>
       </div>
     </section>
 
     <section class="lineup-section">
       <div class="section-heading">
         <div>
-          <p class="eyebrow eyebrow-dark">SUR SCÈNE CETTE ANNÉE</p>
-          <h2>Du son, du <span>bon.</span></h2>
+          <p class="eyebrow eyebrow-dark">{{ t('home.lineupEyebrow') }}</p>
+          <h2 v-html="t('home.lineupTitle')"></h2>
         </div>
-        <RouterLink to="/billets" class="outline-link">Rejoins-nous <span>↗</span></RouterLink>
+        <RouterLink to="/billets" class="outline-link">{{ t('home.joinUs') }} <span>↗</span></RouterLink>
       </div>
 
       <div class="artist-grid">
@@ -89,9 +74,9 @@ const dateFestival = computed(() => {
           <div class="artist-number">0{{ index + 1 }}</div>
           <div class="artist-symbol">{{ ['✳', '♫', '✺', '〰'][index % 4] }}</div>
           <div class="artist-info">
-            <span>{{ artiste.genre }}</span>
-            <h3>{{ artiste.name }}</h3>
-            <p>{{ artiste.description }}</p>
+            <span>{{ localize(artiste.genre, locale) }}</span>
+            <h3>{{ localize(artiste.name, locale) }}</h3>
+            <p>{{ localize(artiste.description, locale) }}</p>
           </div>
         </article>
       </div>
@@ -99,17 +84,17 @@ const dateFestival = computed(() => {
 
     <section class="ticket-banner">
       <div>
-        <p class="eyebrow">TON ÉTÉ COMMENCE ICI</p>
-        <h2>On se retrouve<br />devant la scène ?</h2>
+        <p class="eyebrow">{{ t('home.bannerEyebrow') }}</p>
+        <h2 v-html="t('home.bannerTitle')"></h2>
       </div>
-      <RouterLink to="/billets" class="button button-dark">Voir les billets <span>↗</span></RouterLink>
+      <RouterLink to="/billets" class="button button-dark">{{ t('home.bannerCta') }} <span>↗</span></RouterLink>
       <span class="banner-spark">✳</span>
     </section>
 
     <footer class="site-footer">
-      <RouterLink class="footer-brand" to="/">JAVA'FEST<span>✳</span></RouterLink>
-      <p>De la musique, des sourires et beaucoup de kiff.</p>
-      <span>© {{ festival.edition }} — La Java Festival</span>
+      <RouterLink class="footer-brand" to="/">{{ t('footer.brand') }}<span>✳</span></RouterLink>
+      <p>{{ t('footer.text') }}</p>
+      <span>{{ t('footer.copyright', { year: festival.edition }) }}</span>
     </footer>
   </main>
 </template>
@@ -132,19 +117,7 @@ a { color: inherit; text-decoration: none; }
 button, a { -webkit-tap-highlight-color: transparent; }
 
 .festival-home { overflow: hidden; background: #fffaf4; }
-.topline {
-  width: min(1240px, calc(100% - 64px)); height: 86px; margin: auto;
-  display: flex; align-items: center; justify-content: space-between; gap: 28px;
-}
-.wordmark, .footer-brand { display: inline-flex; align-items: center; gap: 10px; font: 700 19px 'Space Grotesk', sans-serif; letter-spacing: -.8px; }
-.wordmark-mark { display: grid; place-items: center; width: 35px; height: 35px; border-radius: 50%; color: #fffaf4; background: #f16d4e; font-size: 21px; }
-.wordmark-mark span { font-size: 10px; margin-left: -5px; margin-top: -23px; color: #ffd46b; }
-.wordmark-light { color: #f16d4e; }
-.main-nav { display: flex; align-items: center; gap: clamp(18px, 3vw, 42px); }
-.main-nav a, .login-link { font-size: 13px; font-weight: 700; transition: color .2s; }
-.main-nav a:hover, .login-link:hover { color: #ee6b4b; }
-.login-link { border: 1px solid #e8ddd3; border-radius: 30px; padding: 12px 17px; }
-.login-link span { color: #ee6b4b; margin-left: 7px; }
+.footer-brand { display: inline-flex; align-items: center; gap: 10px; font: 700 19px 'Space Grotesk', sans-serif; letter-spacing: -.8px; }
 
 .hero {
   position: relative; min-height: 610px; width: min(1340px, calc(100% - 40px)); margin: 0 auto;
@@ -219,10 +192,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .site-footer p, .site-footer > span { color: #9b8b82; font-size: 10px; }
 
 @media (max-width: 760px) {
-  .topline { width: calc(100% - 36px); height: 72px; flex-wrap: wrap; }
-  .main-nav { order: 3; width: 100%; justify-content: center; gap: 25px; padding-bottom: 14px; }
-  .main-nav a { font-size: 11px; }
-  .login-link { padding: 10px 12px; font-size: 10px; }
   .hero { width: calc(100% - 20px); min-height: 610px; margin-top: 42px; }
   .hero-content { width: 90%; padding: 68px 0 105px 8%; }
   .hero h1 { font-size: clamp(58px, 13vw, 88px); letter-spacing: -4px; }
