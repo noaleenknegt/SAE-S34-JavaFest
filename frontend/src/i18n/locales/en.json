@@ -162,7 +162,7 @@
     "backHome": "← Home"
   },
   "contact": {
-    "mailPlaceHolder": "firstname.name{'@'}exemple.com",
+    "mailPlaceHolder": "firstname.name{'@'}example.com",
     "heroEyebrow": "2027 EDITION · LA JAVA",
     "heroTitle": "Got a question?<br /><span>Drop us a line.</span>",
     "heroSub": "Tickets, shop, accessibility or partnerships: the Java'Fest team will get back to you as soon as possible.",
